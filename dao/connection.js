@@ -1,10 +1,11 @@
 const mysql = require('mysql');
+const bluebird = require('bluebird');
 
-const connection = mysql.createConnection({
+const connection = bluebird.promisifyAll(mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'test'
-});
+}));
 
 connection.connect();
 

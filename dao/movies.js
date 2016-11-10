@@ -1,19 +1,18 @@
+const co = require('coroutinify');
 const connection = require('./connection');
 
 class Movies {
+    constructor () {
+        return co(this);
+    }
 
-    getMovie(done) {
-        connection.query('SELECT 222 as result', (err, rows, fields) => {
-            if(!err || rows) {
-                return done(null, {
-                    title: 'Prestige',
-                    director: 'Christopher Nolan',
-                    rows: rows,
-                    fields: fields
-                });
-            }
-            return done(err || new Error('Something went wrong!'));
-        });
+    *getMovie() {
+        let rows = yield connection.queryAsync('SELECT 222 as result');
+        return {
+            title: 'Prestige',
+            director: 'Christopher Nolan',
+            rows: rows
+        };
     }
 }
 

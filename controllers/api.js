@@ -5,7 +5,7 @@ class Api {
         this.app = app;
         app.get('/api/user', this.getDefaultUser);
         app.get('/api/movies', this.getMovie);
-        app.get('/test', function(req, res) {
+        app.get('/test', (req, res) => {
             res.sendfile('public/index.html')
         });
     }
@@ -20,8 +20,10 @@ class Api {
     }
 
     getMovie(req, res, next) {
-        moviesDao.getMovie((err, movie) => {
+        moviesDao.getMovie().then((movie) => {
             res.send(movie);
+        }).catch((err) => {
+            res.status(500).send({ error: err });
         });
     }
 }
