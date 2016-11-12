@@ -1,7 +1,7 @@
 const co = require('coroutinify');
 const connection = require('./connection');
 
-class Movies {
+class Movie {
     constructor () {
         return co(this);
     }
@@ -25,4 +25,4 @@ class Movies {
     }
 }
 
-module.exports = new Movies();
+module.exports = new Movie();

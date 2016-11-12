@@ -2,7 +2,8 @@ var ngApp = angular.module('ngApp', ["ngRoute"]);
 ngApp.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : 'templates/home.html'
+        templateUrl : 'templates/home.html',
+        controller: 'homeCtrl'
     })
     .when('/movies', {
         templateUrl : 'templates/movies.html',
