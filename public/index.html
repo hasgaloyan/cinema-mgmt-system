@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cinema Management System</title>
-</head>
-<body>
-<h1>Cinema Management System</h1>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Cinema Management System</title>
+        <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="http://yegor256.github.io/tacit/tacit.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+        <script src="js/routes.js"></script>
+        <script src="js/controllers/movies.js"></script>
+        <script src="js/controllers/actors.js"></script>
+    </head>
+    <body ng-app="ngApp">
+        <h1>Cinema Management System</h1>
+        <div ng-view></div>
+    </body>
 </html>
-
-<script>
-
-alert(123);
-
-
-</script>

@@ -1,11 +1,13 @@
 const moviesDao = require('../dao/movies');
+const actorsDao = require('../dao/actors');
 
 class Api {
     handle (app) {
         this.app = app;
         app.get('/api/user', this.getDefaultUser);
-        app.get('/api/movies', this.getMovie);
-        app.get('/test', function(req, res) {
+        app.get('/api/actors', this.getActors);
+        app.get('/api/movies', this.getMovies);
+        app.get('/test', (req, res) => {
             res.sendfile('public/index.html')
         });
     }
@@ -19,9 +21,19 @@ class Api {
         });
     }
 
-    getMovie(req, res, next) {
-        moviesDao.getMovie((err, movie) => {
-            res.send(movie);
+    getActors(req, res, next) {
+        actorsDao.getActors().then((actors) => {
+            res.send(actors);
+        }).catch((err) => {
+            res.status(500).send({ error: err });
+        });
+    }
+
+    getMovies(req, res, next) {
+        moviesDao.getMovies().then((movies) => {
+            res.send(movies);
+        }).catch((err) => {
+            res.status(500).send({ error: err });
         });
     }
 }
