@@ -1,6 +1,53 @@
 <ul>
     <li><a href="/#actors">Actors</a></li>
     <li><a href="/#movies">Movies</a></li>
+    <li><a href="/#sessions">Sessions</a></li>
 </ul>
 <input type="text" ng-model="searchText" placeholder="Search for actors..."/>
-<input type="button" height="30" width="100" title="Search" ng-click="searchActors()"/>
+
+<div class="radio-group">
+    by movie<input type="radio" name="searchBy" value="movie"><br>
+    by session<input type="radio" name="searchBy" value="session"><br>
+    by actor<input type="radio" name="searchBy" value="actor"><br>
+</div>
+
+<button title="Search" ng-click="searchActors()">Search</button>
+
+<hr/>
+
+<div class="actors" ng-if="actors && !noData">
+    <div ng-repeat="actor in actors">
+        <span>{{ actor.FirstName }}</span>
+        <span>{{ actor.LastName }}</span>
+    </div>
+</div>
+<div ng-if="noData">
+    <span>{{noData}}</span>
+</div>
+
+<div class="movies">
+
+</div>
+
+<div class="sessions">
+
+</div>
+<!--<div ng-repeat="object in objects">-->
+    <!--<div>-->
+        <!--<img width="200" height="200"-->
+             <!--ng-src="https://s-media-cache-ak0.pinimg.com/originals/e5/9d/0e/e59d0e67e9da5159780f38aa18d2b59b.png">-->
+    <!--</div>-->
+    <!--<div>{{object.Title}}</div>-->
+
+<!--</div>-->
+
+<!--<tr>-->
+    <!--<td><b>Title</b><td>-->
+    <!--<td><b>Director</b><td>-->
+    <!--<td><b>Rate</b><td>-->
+<!--</tr>-->
+<!--<tr ng-repeat="item in objects">-->
+    <!--<td>{{item.title}}<td>-->
+    <!--<td>{{item.director}}<td>-->
+    <!--<td>{{item.rate}}<td>-->
+<!--</tr>-->

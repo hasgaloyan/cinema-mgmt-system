@@ -1,5 +1,5 @@
 var ngApp = angular.module('ngApp', ["ngRoute"]);
-ngApp.config(function($routeProvider) {
+ngApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
     .when("/", {
         templateUrl : 'templates/home.html',
@@ -12,6 +12,13 @@ ngApp.config(function($routeProvider) {
     .when('/actors', {
         templateUrl : 'templates/actors.html',
         controller: 'actorsCtrl'
+    })
+    .when('/sessions', {
+        templateUrl : 'templates/sessions.html',
+        controller: 'sessionsCtrl'
+    })
+    .otherwise({
+        redirectTo: '/'
     });
 
 });

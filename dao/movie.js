@@ -8,20 +8,14 @@ class Movie {
 
     *getMovies () {
         let rows = yield connection.queryAsync(`SELECT
-            "Prestige" as title,
-            "Christopher Nolan" as director,
-            5 as rate
-        UNION
-        SELECT
-            "Match Point" as title,
-            "Woody Allen" as director,
-            5 as rate
-        UNION
-        SELECT
-            "A Love Song for Bobby Long" as title,
-            "Shainee Gabel" as director,
-            5 as rate`);
+            * FROM Movie`);
         return rows;
+    }
+
+    *getMovieByTitle(title){
+        let movie = connection.queryAsync(`SELECT * From MOVIE as M WHERE 
+            M.Title Like %title%`);
+        return movie;
     }
 }
 

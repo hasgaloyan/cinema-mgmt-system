@@ -21,15 +21,15 @@ class Actor {
 
     *getActorsByName(name) {
         let rows = yield connection.queryAsync(`SELECT
-            ${name} as name,
-            "July 3, 1962" as birth`);
+            * FROM Actor WHERE FirstName Like "${name}%" OR LastName="${name}"`);
         return rows;
     }
 
-    // *getActorsByAge(agefrom, ageto) {
-    //     let rows = yield  connection.queryAsync(`SELECT
-    //         * FROM Actor WHERE shkjbhsj`) //TODO
-    // }
+    *getActorsByAge(agefrom, ageto) {
+        let rows = yield  connection.queryAsync(`SELECT
+            * FROM Actor WHERE Age >= ${agefrom} AND
+            Age <= ${ageto}`) //TODO
+    }
 }
 
 module.exports = new Actor();

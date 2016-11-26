@@ -1,15 +1,19 @@
-<div>
+<div class="table-responsive">
     <h2>Movies</h2>
-    <table cellpadding="3">
+    <table class="table">
         <tr>
-            <td><b>Title</b><td>
-            <td><b>Director</b><td>
-            <td><b>Rate</b><td>
+            <td><b>Title</b></td>
+            <td><b>Director</b></td>
+            <td><b>Genre</b></td>
+            <td><b>Duration</b></td>
+            <td><b>Release Year</b><td>
         </tr>
         <tr ng-repeat="x in movies">
-            <td>{{x.title}}<td>
-            <td>{{x.director}}<td>
-            <td>{{x.rate}}<td>
+            <td>{{x.Title}}</td>
+            <td>{{x.Director}}</td>
+            <td>{{x.Genre}}</td>
+            <td>{{x.Duration}}</td>
+            <td>{{x.ReleaseYear}}</td>
         </tr>
     </table>
 </div>

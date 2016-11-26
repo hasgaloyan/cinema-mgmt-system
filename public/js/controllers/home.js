@@ -1,9 +1,30 @@
-/**
- * Created by has on 11/12/16.
- */
 angular.module('ngApp').controller('homeCtrl', function($scope, $http) {
+
+    $scope.noData = null;
     $scope.searchActors = function () {
-        var searchQuery = $scope.searchText;
-        alert(searchQuery);
+
+        $scope.searchActors = function(){
+
+            if(!$scope.searchText){
+                return;
+            }
+
+            $http.get('api/actors/' + $scope.searchText).then(function(result){
+
+                if(!result.data.length){
+                    $scope.noData = "No actor found";
+                    console.log($scope.noData);
+                    return;
+                }
+
+                console.info(result);
+                $scope.actors = result.data;
+                $scope.noData = null;
+
+            }, function(err){
+                console.error(err);
+            });
+
+        };
     }
 });
