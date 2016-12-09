@@ -1,5 +1,6 @@
 const moviesDao = require('../dao/movie');
 const actorsDao = require('../dao/actor');
+const sessionsDao = require('../dao/session');
 //const usersDao = require('../dao/users');
 
 class Api {
@@ -16,6 +17,11 @@ class Api {
         app.get('/api/actors/:name([\\w]+)', this.getActorsByName);
         app.get('/api/actors/search', this.searchActor);
         //app.get('/api/movies/search/:title([\\w]+)', this.searchMovie); //TODO
+
+        //Session related
+        app.get('/api/sessions', this.getSessions);
+        app.get('/api/sessions/:id([\\d]+)', this.getSessionById);
+        app.get('/api/movies/:id([\\d]+)/sessions', this.getAllSessionsOfMovieById);
     }
 
     getDefaultUser(req, res, next) {
@@ -86,8 +92,37 @@ class Api {
 
     getMovies(req, res, next) {
         moviesDao.getMovies().then((movies) => {
-            console.log(movies);
             res.send(movies);
+        }).catch((err) => {
+            res.status(500).send({ error: err });
+        });
+    }
+
+    getSessions(req, res, next) {
+        let promise;
+        if(req.query.title) {
+            promise = sessionsDao.getSessionsByMovieTitle(req.query.title);
+        } else {
+            promise = sessionsDao.getSessions();
+        }
+        promise.then((sessions) => {
+            res.send(sessions);
+        }).catch((err) => {
+            res.status(500).send({ error: err });
+        });
+    }
+
+    getSessionById(req, res, next) {
+        sessionsDao.getSessionById(req.params.id).then((session) => {
+            res.send(session);
+        }).catch((err) => {
+            res.status(500).send({ error: err });
+        });
+    }
+
+    getAllSessionsOfMovieById(req, res, next) {
+        sessionsDao.getAllSessionsOfMovie(req.params.id).then((session) => {
+            res.send(session);
         }).catch((err) => {
             res.status(500).send({ error: err });
         });

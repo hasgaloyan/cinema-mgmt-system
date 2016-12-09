@@ -1,0 +1,17 @@
+<div class="table-responsive">
+    <h2>Sessions</h2>
+    <table class="table">
+        <tr>
+            <td><b>Movie Name</b></td>
+            <td><b>Language</b></td>
+            <td><b>Hall</b></td>
+            <td><b>Date</b></td>
+        </tr>
+        <tr ng-repeat="x in sessions">
+            <td>{{x.Title}}</td>
+            <td>{{x.Language}}</td>
+            <td>{{x.HallName}}</td>
+            <td>{{x.DateTime}}</td>
+        </tr>
+    </table>
+</div>
