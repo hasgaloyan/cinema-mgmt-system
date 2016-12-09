@@ -1,11 +1,26 @@
 const moviesDao = require('../dao/movie');
 const actorsDao = require('../dao/actor');
-const sessionsDao = require('../dao/session');
-//const usersDao = require('../dao/users');
+const usersDao = require('../dao/users');
+const bodyParser = require('body-parser');
+const session = require('client-sessions');
+
+
+
 
 class Api {
     handle (app) {
         this.app = app;
+
+        app.use(bodyParser.urlencoded({ extended: false }));
+        app.use(bodyParser.json());
+
+        app.use(session({
+            cookieName: 'session',
+            secret: 'kskjagsfkjhsgfkh',
+            duration: 7 * 24 * 60 * 60 * 1000
+        }));
+
+
 
         //showData operations
         app.get('/api/user', this.getDefaultUser);
@@ -16,12 +31,10 @@ class Api {
         app.get('/api/actors/:id([\\d]+)', this.getActor);
         app.get('/api/actors/:name([\\w]+)', this.getActorsByName);
         app.get('/api/actors/search', this.searchActor);
+        app.post('/api/users', this.signIn);
+        app.get('/api/profile', this.getProfile);
+        app.get('/api/logout', this.logout);
         //app.get('/api/movies/search/:title([\\w]+)', this.searchMovie); //TODO
-
-        //Session related
-        app.get('/api/sessions', this.getSessions);
-        app.get('/api/sessions/:id([\\d]+)', this.getSessionById);
-        app.get('/api/movies/:id([\\d]+)/sessions', this.getAllSessionsOfMovieById);
     }
 
     getDefaultUser(req, res, next) {
@@ -67,6 +80,50 @@ class Api {
         });
     }
 
+    signIn(req, res, next){
+        let args = req.body;
+        req.session.user = args.password;
+        usersDao.signIn(args).then((user) => {
+            let userInfo = {
+                name: user[0].FirstName,
+                lastName: user[0].LastName
+            };
+            res.send(userInfo);
+        }).catch((err) => {
+            res.status(500).send({ error: err });
+        });
+    }
+
+    getProfile(req, res, next){
+        usersDao.getProfile().then((profile) => {
+
+            var data = null;
+
+            profile.forEach((item) => {
+                if(item.UserPassword == req.session.user){
+                    let userInfo = {
+                        name: item.FirstName,
+                        lastName: item.LastName
+                    };
+                    data = userInfo;
+                }else{
+                    data = 401;
+                }
+            });
+
+            res.send(data);
+
+        }).catch((err) => {
+            res.status(401).send({ error: err });
+        })
+    }
+
+    logout(req, res, next) {
+        req.session.reset();
+        console.log('session destroyed');
+        res.status(200).send({message: "logged out"});
+    }
+
 
     ///TODO
     // searchMovie(req, res, next) {
@@ -92,37 +149,8 @@ class Api {
 
     getMovies(req, res, next) {
         moviesDao.getMovies().then((movies) => {
+            console.log(movies);
             res.send(movies);
-        }).catch((err) => {
-            res.status(500).send({ error: err });
-        });
-    }
-
-    getSessions(req, res, next) {
-        let promise;
-        if(req.query.title) {
-            promise = sessionsDao.getSessionsByMovieTitle(req.query.title);
-        } else {
-            promise = sessionsDao.getSessions();
-        }
-        promise.then((sessions) => {
-            res.send(sessions);
-        }).catch((err) => {
-            res.status(500).send({ error: err });
-        });
-    }
-
-    getSessionById(req, res, next) {
-        sessionsDao.getSessionById(req.params.id).then((session) => {
-            res.send(session);
-        }).catch((err) => {
-            res.status(500).send({ error: err });
-        });
-    }
-
-    getAllSessionsOfMovieById(req, res, next) {
-        sessionsDao.getAllSessionsOfMovie(req.params.id).then((session) => {
-            res.send(session);
         }).catch((err) => {
             res.status(500).send({ error: err });
         });
