@@ -1,26 +1,36 @@
-<ul>
-    <li><a href="/#actors">Actors</a></li>
-    <li><a href="/#movies">Movies</a></li>
-    <li><a href="/#sessions">Sessions</a></li>
-</ul>
+<button ng-if="user" ng-click="logout()">Logout</button>
+<button ng-if="!user" ng-click="login()">Login</button>
+
 <input type="text" ng-model="searchText" placeholder="Search for actors..."/>
 
 <div class="radio-group">
-    by movie<input type="radio" name="searchBy" value="movie"><br>
-    by session<input type="radio" name="searchBy" value="session"><br>
-    by actor<input type="radio" name="searchBy" value="actor"><br>
+    <form action="">
+        by movie<input type="radio" name="searchBy" value="movie" ng-model="type"><br>
+        by session<input type="radio" name="searchBy" value="session" ng-model="type"><br>
+        by actor<input type="radio" name="searchBy" value="actor" ng-model="type"><br>
+    </form>
 </div>
 
-<button title="Search" ng-click="searchActors()">Search</button>
+<button title="Search" ng-click="search()">Search</button>
 
 <hr/>
 
-<div class="actors" ng-if="actors && !noData">
+<div ng-if="actors" class="actors" ng-if="actors && !noData">
     <div ng-repeat="actor in actors">
         <span>{{ actor.FirstName }}</span>
         <span>{{ actor.LastName }}</span>
     </div>
 </div>
+
+
+<div ng-if="movies" class="movies" ng-if="allData && !noData">
+    <div ng-repeat="movie in movies">
+        <span>{{ movie.Title }}</span>
+    </div>
+</div>
+
+
+
 <div ng-if="noData">
     <span>{{noData}}</span>
 </div>
@@ -33,21 +43,21 @@
 
 </div>
 <!--<div ng-repeat="object in objects">-->
-    <!--<div>-->
-        <!--<img width="200" height="200"-->
-             <!--ng-src="https://s-media-cache-ak0.pinimg.com/originals/e5/9d/0e/e59d0e67e9da5159780f38aa18d2b59b.png">-->
-    <!--</div>-->
-    <!--<div>{{object.Title}}</div>-->
+<!--<div>-->
+<!--<img width="200" height="200"-->
+<!--ng-src="https://s-media-cache-ak0.pinimg.com/originals/e5/9d/0e/e59d0e67e9da5159780f38aa18d2b59b.png">-->
+<!--</div>-->
+<!--<div>{{object.Title}}</div>-->
 
 <!--</div>-->
 
 <!--<tr>-->
-    <!--<td><b>Title</b><td>-->
-    <!--<td><b>Director</b><td>-->
-    <!--<td><b>Rate</b><td>-->
+<!--<td><b>Title</b><td>-->
+<!--<td><b>Director</b><td>-->
+<!--<td><b>Rate</b><td>-->
 <!--</tr>-->
 <!--<tr ng-repeat="item in objects">-->
-    <!--<td>{{item.title}}<td>-->
-    <!--<td>{{item.director}}<td>-->
-    <!--<td>{{item.rate}}<td>-->
+<!--<td>{{item.title}}<td>-->
+<!--<td>{{item.director}}<td>-->
+<!--<td>{{item.rate}}<td>-->
 <!--</tr>-->

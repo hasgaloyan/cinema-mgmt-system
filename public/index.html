@@ -13,9 +13,20 @@
         <script src="js/controllers/actors.js"></script>
         <script src="js/controllers/sessions.js"></script>
         <script src="js/controllers/home.js"></script>
+        <script src="js/controllers/login.js"></script>
+
+        <style>
+            a {
+                padding: 20px;
+            }
+        </style>
     </head>
     <body ng-app="ngApp">
         <h1>Cinema Management System</h1>
+        <a href="#/home">Home</a>
+        <a href="#/movies">Movies</a>
+        <a href="#/actors">Actors</a>
+        <a href="#/sessions">Sessions</a>
         <div ng-view></div>
     </body>
 </html>

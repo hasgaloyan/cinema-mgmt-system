@@ -13,8 +13,8 @@ class Movie {
     }
 
     *getMovieByTitle(title){
-        let movie = connection.queryAsync(`SELECT * From MOVIE as M WHERE 
-            M.Title Like %title%`);
+        let movie = connection.queryAsync(`SELECT * From Movie as M WHERE 
+            M.Title Like "${title}%"`);
         return movie;
     }
 }
